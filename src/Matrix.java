@@ -126,7 +126,6 @@ public class Matrix {
         return calcResult;
     }
 
-    //функция, к-я возвращает нужный нам минор. На входе - определитель, из к-го надо достать минор и номера строк-столбцов, к-е надо вычеркнуть.
     private static ComplexNumber[][] GetMinor(ComplexNumber[][] matrix, int row, int column) {
         int minorLength = matrix.length - 1;
         ComplexNumber[][] minor = new ComplexNumber[minorLength][minorLength];
