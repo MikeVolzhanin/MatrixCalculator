@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class ComplexNumber {
     double realPart;
     double imaginaryPart;
