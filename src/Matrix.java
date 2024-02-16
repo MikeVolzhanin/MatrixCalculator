@@ -33,9 +33,9 @@ public class Matrix {
             for(int i = 0; i < N; i++){
                 for(int j = 0; j < M; j++){
                     if(type == 1)
-                        result.getMatrix()[i][j] = CalcComplexNumbers.add(matrix.getMatrix()[i][j], matrix1.getMatrix()[i][j]);
+                        result.getMatrix()[i][j] = matrix.getMatrix()[i][j].add(matrix1.getMatrix()[i][j]);
                     else
-                        result.getMatrix()[i][j] = CalcComplexNumbers.sub(matrix.getMatrix()[i][j], matrix1.getMatrix()[i][j]);
+                        result.getMatrix()[i][j] = matrix.getMatrix()[i][j].sub(matrix1.getMatrix()[i][j]);
                 }
             }
             return result;
@@ -60,8 +60,7 @@ public class Matrix {
                 for(int j = 0; j < L; j++){
                     result.getMatrix()[i][j] = new ComplexNumber(0, 0);
                     for(int k = 0; k < M; k++){
-                        result.getMatrix()[i][j] = CalcComplexNumbers.add(result.getMatrix()[i][j],
-                                CalcComplexNumbers.multiply(matrix.getMatrix()[i][k], matrix1.getMatrix()[k][j]));
+                        result.getMatrix()[i][j] = result.getMatrix()[i][j].add(matrix.getMatrix()[i][k].multiply(matrix1.getMatrix()[k][j]));
                     }
                 }
             }
@@ -80,7 +79,7 @@ public class Matrix {
 
         for(int i = 0; i < N; i++){
             for(int j = 0; j < M; j++){
-                result.getMatrix()[i][j] = CalcComplexNumbers.multiply(matrix.getMatrix()[i][j], complexNumber);
+                result.getMatrix()[i][j] = matrix.getMatrix()[i][j].multiply(complexNumber);
             }
         }
 
@@ -103,9 +102,7 @@ public class Matrix {
         ComplexNumber calcResult = new ComplexNumber(0 , 0);
 
         if (matrix.length==2){
-            calcResult=
-                    CalcComplexNumbers.sub(CalcComplexNumbers.multiply(matrix[0][0],matrix[1][1]),
-                                            CalcComplexNumbers.multiply(matrix[1][0],matrix[0][1]));
+            calcResult = matrix[0][0].multiply(matrix[1][1]).sub(matrix[1][0].multiply(matrix[0][1]));
         }
         else{
             int koeff=1;
@@ -117,20 +114,17 @@ public class Matrix {
                     koeff=1;
                 };
                 ComplexNumber temp = new ComplexNumber(koeff, 0);
-                calcResult = CalcComplexNumbers.add(calcResult,
-                        CalcComplexNumbers.multiply(det(GetMinor(matrix,0,i)),
-                                CalcComplexNumbers.multiply(temp, matrix[0][i])));
+                calcResult = calcResult.add(det(GetMinor(matrix,0,i)).multiply(temp.multiply(matrix[0][i])));
             }
         }
 
         return calcResult;
     }
 
-    //функция, к-я возвращает нужный нам минор. На входе - определитель, из к-го надо достать минор и номера строк-столбцов, к-е надо вычеркнуть.
     private static ComplexNumber[][] GetMinor(ComplexNumber[][] matrix, int row, int column) {
         int minorLength = matrix.length - 1;
         ComplexNumber[][] minor = new ComplexNumber[minorLength][minorLength];
-        int dI = 0;//эти переменные для того, чтобы "пропускать" ненужные нам строку и столбец
+        int dI = 0;
         int dJ = 0;
         for (int i = 0; i <= minorLength; i++) {
             dJ = 0;

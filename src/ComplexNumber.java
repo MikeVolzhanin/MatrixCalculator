@@ -11,6 +11,42 @@ public class ComplexNumber {
 
     public ComplexNumber() {}
 
+    public ComplexNumber add(ComplexNumber secondNumber){
+        return new ComplexNumber(realPart + secondNumber.realPart,
+                imaginaryPart + secondNumber.imaginaryPart);
+    }
+
+    public ComplexNumber sub(ComplexNumber secondNumber){
+        return new ComplexNumber(realPart - secondNumber.realPart,
+                imaginaryPart - secondNumber.imaginaryPart );
+    }
+
+    public ComplexNumber multiply(ComplexNumber secondNumber){
+        return new ComplexNumber(
+                realPart * secondNumber.realPart - imaginaryPart* secondNumber.imaginaryPart,
+                imaginaryPart * secondNumber.realPart + realPart * secondNumber.imaginaryPart
+        );
+    }
+
+    public ComplexNumber divide(ComplexNumber secondNumber){
+        ComplexNumber division = new ComplexNumber();
+        double tempReal, tempImaginary;
+
+        if (Math.abs(secondNumber.realPart) >= Math.abs(secondNumber.imaginaryPart)) {
+            tempReal = secondNumber.imaginaryPart/ secondNumber.realPart;
+            tempImaginary = secondNumber.realPart + tempReal * secondNumber.imaginaryPart;
+            division.realPart = (realPart + tempReal * imaginaryPart) / tempImaginary;
+            division.imaginaryPart = (imaginaryPart - tempReal * realPart) / tempImaginary;
+        } else {
+            tempReal = secondNumber.realPart / secondNumber.imaginaryPart;
+            tempImaginary = secondNumber.imaginaryPart + tempReal * secondNumber.realPart;
+            division.realPart = (tempReal * realPart + imaginaryPart) / tempImaginary;
+            division.imaginaryPart = (tempReal * imaginaryPart - realPart) / tempImaginary;
+        }
+
+        return division;
+    }
+
     public static ComplexNumber convertToComplexNumber(String number) {
         ComplexNumber complexNumber = new ComplexNumber();
 
